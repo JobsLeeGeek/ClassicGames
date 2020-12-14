@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.*?>
+<AnchorPane fx:id="mainPane" focusTraversable="true" prefHeight="600.0" prefWidth="700.0"
+            style="-fx-background-color: &quot;0xFAF8EF&quot;;" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobsl.cgames.sudoku.Controller">
+    <children>
+        <Canvas fx:id="mainCanvas" focusTraversable="true" height="495.0" layoutX="127.0" layoutY="14.0" width="495.0"
+                AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0"
+                AnchorPane.topAnchor="50.0"/>
+    </children>
+</AnchorPane>
