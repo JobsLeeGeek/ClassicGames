@@ -15,8 +15,8 @@ public class Generator {
     /**
      * 构造方法 初始化解法器
      */
-    public Generator() {
-        this.solver = new Solver();
+    public Generator(Solver solver) {
+        this.solver = solver;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Generator {
             int randomRow = random.nextInt(9);
             int randomColumn = random.nextInt(9);
 
-            Grid.Cell cell = grid.getCell(randomRow, randomColumn);
+            Cell cell = grid.getCell(randomRow, randomColumn);
             if (!cell.isEmpty()) {
                 cell.setValue(0);
             } else {
