@@ -4,7 +4,7 @@
 - [x] 2048
 - [x] 数独
 - [ ] 坦克大战
-- [] FlappyBird
+- [ ] FlappyBird
 - [ ] 待补充
 
 ---
