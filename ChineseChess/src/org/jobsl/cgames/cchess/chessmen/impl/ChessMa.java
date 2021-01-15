@@ -1,6 +1,5 @@
 package org.jobsl.cgames.cchess.chessmen.impl;
 
-
 import org.jobsl.cgames.cchess.base.Point;
 import org.jobsl.cgames.cchess.chessboard.ChessBoard;
 import org.jobsl.cgames.cchess.chessmen.ChessColor;
