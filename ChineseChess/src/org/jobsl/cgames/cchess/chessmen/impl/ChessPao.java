@@ -18,14 +18,14 @@ public class ChessPao extends Chessman implements ChessRule {
     @Override
     protected void setNameAndColor(ChessColor color) {
         this.color = color;
-        this.name = ChessName.PAO.getName();
+        this.name = ChessName.PAO;
     }
 
     @Override
-    public boolean checkRule(Point nextP, ChessBoard cBoard) {
-        if (nextP.getX() != this.point.getX() && nextP.getY() != this.point.getY()) return false;
-        if (cBoard.checkCellNotEmptyNum(this.point, nextP) == 1 && cBoard.checkCellEmpty(nextP, color.getOpposed(color)))
-            return false;
-        return super.checkRule(nextP, cBoard);
+    public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
+        if (nextP.getX() != currentP.getX() && nextP.getY() != currentP.getY()) return false;
+        if (cBoard.checkCellNotEmptyNum(currentP, nextP) > 1) return false;
+        if (cBoard.checkCellNotEmptyNum(currentP, nextP) == 1 && cBoard.checkCellEmpty(nextP, color.getOpposed(color))) return false;
+        return super.checkRule(currentP, nextP, cBoard);
     }
 }

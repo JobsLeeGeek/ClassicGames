@@ -18,13 +18,12 @@ public class ChessBing extends Chessman implements ChessRule {
     @Override
     protected void setNameAndColor(ChessColor color) {
         this.color = color;
-        this.name = ChessColor.RED.equals(color) ? ChessName.BING_RED.getName() : ChessName.ZU_BLACK.getName();
+        this.name = ChessColor.RED.equals(color) ? ChessName.BING_RED : ChessName.ZU_BLACK;
     }
 
     @Override
-    public boolean checkRule(Point nextP, ChessBoard cBoard) {
-        if ((Math.abs(nextP.getX() - this.point.getX()) > 1) || (Math.abs(nextP.getY() - this.point.getY()) > 1))
-            return false;
-        return super.checkRule(nextP, cBoard);
+    public boolean checkRule(Point lastP, Point nextP, ChessBoard cBoard) {
+        if ((Math.abs(nextP.getX() - lastP.getX()) > 1) || (Math.abs(nextP.getY() - lastP.getY()) > 1)) return false;
+        return super.checkRule(lastP, nextP, cBoard);
     }
 }

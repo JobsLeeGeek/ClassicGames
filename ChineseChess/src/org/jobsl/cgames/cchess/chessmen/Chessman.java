@@ -7,9 +7,8 @@ import org.jobsl.cgames.cchess.chessboard.ChessBoard;
  * @author JobsLee
  */
 public abstract class Chessman implements ChessRule {
-    protected Point point;
     protected ChessColor color;
-    protected String name;
+    protected ChessName name;
 
     public Chessman(ChessColor color) {
         setNameAndColor(color);
@@ -18,7 +17,7 @@ public abstract class Chessman implements ChessRule {
     protected abstract void setNameAndColor(ChessColor color);
 
     @Override
-    public boolean checkRule(Point nextP, ChessBoard cBoard) {
+    public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
         if (nextP.getX() >= 0 && nextP.getX() < 9
                 && nextP.getY() >= 0 && nextP.getY() < 10) {
             if (!cBoard.checkCellEmpty(nextP, color)) return false;
@@ -32,7 +31,7 @@ public abstract class Chessman implements ChessRule {
         return color;
     }
 
-    public String getName() {
+    public ChessName getName() {
         return name;
     }
 }

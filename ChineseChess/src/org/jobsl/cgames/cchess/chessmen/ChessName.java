@@ -5,15 +5,21 @@ package org.jobsl.cgames.cchess.chessmen;
  */
 
 public enum ChessName {
-    JU("車"), MA("馬"), PAO("炮"), BING_RED("兵"), ZU_BLACK("卒"), SHI_RED("仕"), SHI_BLACK("士"), SHUAI_RED("帥"), JIANG_BLACK("將"), XIANG_RED("相"), XIANG_BLACK("象");
+    JU("車", "JU"), MA("馬", "MA"), PAO("炮", "PAO"), BING_RED("兵", "BING"), ZU_BLACK("卒", "ZU"), SHI_RED("仕", "SHI"), SHI_BLACK("士", "SHI"), SHUAI_RED("帥", "SHUAI"), JIANG_BLACK("將", "JIANG"), XIANG_RED("相", "XIANG"), XIANG_BLACK("象", "XIANG");
 
-    String name;
+    String chinese;
+    String pinyin;
 
-    ChessName(String name) {
-        this.name = name;
+    ChessName(String chinese, String pinyin) {
+        this.chinese = chinese;
+        this.pinyin = pinyin;
     }
 
-    public String getName() {
-        return name;
+    public String getChinese() {
+        return chinese;
+    }
+
+    public String getPinyin() {
+        return pinyin;
     }
 }

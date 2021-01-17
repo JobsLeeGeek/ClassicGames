@@ -18,18 +18,26 @@ public class ChessMa extends Chessman implements ChessRule {
     @Override
     protected void setNameAndColor(ChessColor color) {
         this.color = color;
-        this.name = ChessName.MA.getName();
+        this.name = ChessName.MA;
     }
 
     @Override
-    public boolean checkRule(Point nextP, ChessBoard cBoard) {
+    public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
         boolean res = false;
-        if (Math.abs(nextP.getX() - this.point.getX()) == 1) {
-            if (Math.abs(nextP.getY() - this.point.getY()) == 2) res = true;
+        int xx = nextP.getX() - currentP.getX();
+        int yy = nextP.getY() - currentP.getY();
+        if (Math.abs(xx) == 1) {
+            if (Math.abs(yy) == 2) {
+                Point blockP = new Point(currentP.getX() + xx, currentP.getY() + (yy / 2));
+                if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
+            }
         }
-        if (Math.abs(nextP.getY() - this.point.getY()) == 1) {
-            if (Math.abs(nextP.getX() - this.point.getX()) == 2) res = true;
+        if (Math.abs(yy) == 1) {
+            if (Math.abs(xx) == 2) {
+                Point blockP = new Point(currentP.getX() + (xx / 2), currentP.getY() + yy);
+                if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
+            }
         }
-        return res ? super.checkRule(nextP, cBoard) : res;
+        return res ? super.checkRule(currentP, nextP, cBoard) : res;
     }
 }

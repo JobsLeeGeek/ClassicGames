@@ -7,5 +7,5 @@ import org.jobsl.cgames.cchess.chessboard.ChessBoard;
  * @author JobsLee
  */
 public interface ChessRule {
-    boolean checkRule(Point nextP, ChessBoard cBoard);
+    boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard);
 }

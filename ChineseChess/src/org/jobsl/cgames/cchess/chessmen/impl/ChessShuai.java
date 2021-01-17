@@ -18,21 +18,21 @@ public class ChessShuai extends Chessman implements ChessRule {
     @Override
     protected void setNameAndColor(ChessColor color) {
         this.color = color;
-        this.name = ChessColor.RED.equals(color) ? ChessName.SHUAI_RED.getName() : ChessName.JIANG_BLACK.getName();
+        this.name = ChessColor.RED.equals(color) ? ChessName.SHUAI_RED : ChessName.JIANG_BLACK;
     }
 
     @Override
-    public boolean checkRule(Point nextP, ChessBoard cBoard) {
-        // x 3~5 y 0~2
-        if (ChessColor.RED.equals(color)) {
-            if (nextP.getX() < 3 || nextP.getX() > 5) return false;
-            if (nextP.getY() < 0 || nextP.getY() > 2) return false;
-        }
+    public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
         // x 3~5 y 7~9
-        if (ChessColor.BLACK.equals(color)) {
+        if (ChessColor.RED.equals(color)) {
             if (nextP.getX() < 3 || nextP.getX() > 5) return false;
             if (nextP.getY() < 7 || nextP.getY() > 9) return false;
         }
-        return super.checkRule(nextP, cBoard);
+        // x 3~5 y 0~2
+        if (ChessColor.BLACK.equals(color)) {
+            if (nextP.getX() < 3 || nextP.getX() > 5) return false;
+            if (nextP.getY() < 0 || nextP.getY() > 2) return false;
+        }
+        return super.checkRule(currentP, nextP, cBoard);
     }
 }
