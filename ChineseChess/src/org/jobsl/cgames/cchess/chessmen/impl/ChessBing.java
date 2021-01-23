@@ -23,7 +23,13 @@ public class ChessBing extends Chessman implements ChessRule {
 
     @Override
     public boolean checkRule(Point lastP, Point nextP, ChessBoard cBoard) {
-        if ((Math.abs(nextP.getX() - lastP.getX()) > 1) || (Math.abs(nextP.getY() - lastP.getY()) > 1)) return false;
-        return super.checkRule(lastP, nextP, cBoard);
+        boolean res = false;
+        int xx = Math.abs(nextP.getX() - lastP.getX());
+        int yy = nextP.getY() - lastP.getY();
+        int absyy = Math.abs(yy);
+        if (ChessColor.RED.equals(color) && yy > 0) return res;
+        if (ChessColor.BLACK.equals(color) && yy < 0) return res;
+        if ((xx == 0 && absyy == 1) || (xx == 1 && absyy == 0)) res = true;
+        return res ? super.checkRule(lastP, nextP, cBoard) : res;
     }
 }

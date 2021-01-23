@@ -23,16 +23,19 @@ public class ChessShi extends Chessman implements ChessRule {
 
     @Override
     public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
+        boolean res = false;
         if (ChessColor.RED.equals(color)) {
             // (3,9) (3,7) (4,8) (5,9) (5,7)
-            if (nextP.getX() != 3 && nextP.getX() != 4 && nextP.getX() != 5) return false;
-            if (nextP.getY() != 7 && nextP.getY() != 8 && nextP.getY() != 9) return false;
+            if (nextP.getX() == 3 && (nextP.getY() == 9 || nextP.getX() == 7)) res = true;
+            if (nextP.getX() == 4 && nextP.getY() == 8) res = true;
+            if (nextP.getX() == 5 && (nextP.getY() == 9 || nextP.getX() == 7)) res = true;
         }
         if (ChessColor.BLACK.equals(color)) {
             // (3,0) (3,2) (4,1) (5,0) (5,2)
-            if (nextP.getX() != 3 && nextP.getX() != 4 && nextP.getX() != 5) return false;
-            if (nextP.getY() != 0 && nextP.getY() != 1 && nextP.getY() != 2) return false;
+            if (nextP.getX() == 3 && (nextP.getY() == 0 || nextP.getX() == 2)) res = true;
+            if (nextP.getX() == 4 && nextP.getY() == 1) res = true;
+            if (nextP.getX() == 5 && (nextP.getY() == 0 || nextP.getX() == 2)) res = true;
         }
-        return super.checkRule(currentP, nextP, cBoard);
+        return res ? super.checkRule(currentP, nextP, cBoard) : res;
     }
 }

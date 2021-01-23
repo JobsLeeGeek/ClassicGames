@@ -25,7 +25,7 @@ public class ChessPao extends Chessman implements ChessRule {
     public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
         if (nextP.getX() != currentP.getX() && nextP.getY() != currentP.getY()) return false;
         if (cBoard.checkCellNotEmptyNum(currentP, nextP) > 1) return false;
-        if (cBoard.checkCellNotEmptyNum(currentP, nextP) == 1 && cBoard.checkCellEmpty(nextP, color.getOpposed(color))) return false;
+        if (cBoard.checkCellNotEmptyNum(currentP, nextP) == 1 && (!cBoard.checkCellEmpty(nextP, color) || cBoard.checkCellEmpty(nextP, color.getOpposed(color)))) return false;
         return super.checkRule(currentP, nextP, cBoard);
     }
 }
