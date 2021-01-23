@@ -119,13 +119,13 @@ public class ChessBoard {
         if (Math.abs(px) > 0) {
             // move on row
             if (px > 0) {
-                for (int i = 1; i <= Math.abs(px); i++) {
+                for (int i = 1; i < Math.abs(px); i++) {
                     Point tryPoint = new Point(currentP.getX() + i, currentP.getY());
                     if (!checkCellEmpty(tryPoint, ChessColor.RED) || !checkCellEmpty(tryPoint, ChessColor.BLACK)) cNum++;
                 }
             }
             if (px < 0) {
-                for (int i = 1; i <= Math.abs(px); i++) {
+                for (int i = 1; i < Math.abs(px); i++) {
                     Point tryPoint = new Point(currentP.getX() - i, currentP.getY());
                     if (!checkCellEmpty(tryPoint, ChessColor.RED) || !checkCellEmpty(tryPoint, ChessColor.BLACK)) cNum++;
                 }
@@ -134,13 +134,13 @@ public class ChessBoard {
         if (Math.abs(py) > 0) {
             // move on column
             if (py > 0) {
-                for (int i = 1; i <= Math.abs(py); i++) {
+                for (int i = 1; i < Math.abs(py); i++) {
                     Point tryPoint = new Point(currentP.getX(), currentP.getY() + i);
                     if (!checkCellEmpty(tryPoint, ChessColor.RED) || !checkCellEmpty(tryPoint, ChessColor.BLACK)) cNum++;
                 }
             }
             if (py < 0) {
-                for (int i = 1; i <= Math.abs(py); i++) {
+                for (int i = 1; i < Math.abs(py); i++) {
                     Point tryPoint = new Point(currentP.getX(), currentP.getY() - i);
                     if (!checkCellEmpty(tryPoint, ChessColor.RED) || !checkCellEmpty(tryPoint, ChessColor.BLACK)) cNum++;
                 }

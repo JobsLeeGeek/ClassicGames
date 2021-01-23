@@ -8,6 +8,7 @@ import org.jobsl.cgames.cchess.base.Constants;
 import org.jobsl.cgames.cchess.chessboard.ChessBoard;
 import org.jobsl.cgames.cchess.chessboard.ChessBoardCell;
 import org.jobsl.cgames.cchess.chessmen.ChessColor;
+import org.jobsl.cgames.cchess.chessmen.Chessman;
 
 /**
  * @author JobsLee
@@ -33,20 +34,58 @@ public class Controller {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 9; j++) {
                 ChessBoardCell cell = boardCells[j][i];
+                cell.reDraw();
                 cell.setOnAction(event -> {
-                    if (cell.getChessman() != null && !chessColorShould.equals(cell.getChessman().getColor())) {
-                        return;
-                    }
-                    // move or override
-                    if (chooseCell != null) chooseCell.unchooseBackground();
-                    if (chooseCell != null && chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
-                        cell.moveFrom(chooseCell);
-                        // change chesscolor should
-                        chessColorShould = chessColorShould.getOpposed(chessColorShould);
-                    }
-                    if (cell.getChessman() != null) {
-                        cell.chooseBackground();
+                    // red first and black second ... one by one
+//                    if (cell.getChessman() != null && !chessColorShould.equals(cell.getChessman().getColor())) return;
+                    // choose new one
+                    if (chooseCell == null) {
+                        cell.setChoose(true);
+                        cell.reDraw();
                         chooseCell = cell;
+                    }
+                    // choose the same one
+                    if (chooseCell == cell) return;
+                    // choose or move or override
+                    Chessman lastC = chooseCell.getChessman();
+                    Chessman nextC = cell.getChessman();
+                    if (lastC == null) return;
+                    if (lastC != null) {
+                        if (nextC != null) {
+                            if (lastC.getColor().equals(nextC.getColor())) {
+                                // the same color choose new one
+                                cell.setChoose(true);
+                                cell.reDraw();
+                                chooseCell.setChoose(false);
+                                chooseCell.reDraw();
+                                chooseCell = cell;
+                                return;
+                            }
+                            // override
+                            if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
+                                cell.setChessman(chooseCell.getChessman());
+                                cell.setChoose(true);
+                                cell.reDraw();
+                                chooseCell.setChoose(false);
+                                chooseCell.setChessman(null);
+                                chooseCell.reDraw();
+                                chooseCell = cell;
+                                return;
+                            }
+                        }
+                        if (nextC == null) {
+                            // move
+                            if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
+                                cell.setChessman(chooseCell.getChessman());
+                                cell.setChoose(true);
+                                cell.reDraw();
+                                chooseCell.setChoose(false);
+                                chooseCell.setChessman(null);
+                                chooseCell.reDraw();
+                                chooseCell = cell;
+                                return;
+                            }
+                        }
                     }
                 });
                 mainPane.getChildren().add(cell);
