@@ -62,30 +62,13 @@ public class Controller {
                                 return;
                             }
                             // override
-                            if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
-                                cell.setChessman(chooseCell.getChessman());
-                                cell.setChoose(true);
-                                cell.reDraw();
-                                chooseCell.setChoose(false);
-                                chooseCell.setChessman(null);
-                                chooseCell.reDraw();
-                                chooseCell = cell;
-                                return;
-                            }
+//                            move(cell);
                         }
-                        if (nextC == null) {
+                        /*if (nextC == null) {
                             // move
-                            if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
-                                cell.setChessman(chooseCell.getChessman());
-                                cell.setChoose(true);
-                                cell.reDraw();
-                                chooseCell.setChoose(false);
-                                chooseCell.setChessman(null);
-                                chooseCell.reDraw();
-                                chooseCell = cell;
-                                return;
-                            }
-                        }
+//                            move(cell);
+                        }*/
+                        move(cell);
                     }
                 });
                 mainPane.getChildren().add(cell);
@@ -93,5 +76,15 @@ public class Controller {
         }
     }
 
-
+    private void move(ChessBoardCell cell) {
+        if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
+            cell.setChessman(chooseCell.getChessman());
+            cell.setChoose(true);
+            cell.reDraw();
+            chooseCell.setChoose(false);
+            chooseCell.setChessman(null);
+            chooseCell.reDraw();
+            chooseCell = cell;
+        }
+    }
 }
