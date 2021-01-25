@@ -23,6 +23,9 @@ public class ChessShuai extends Chessman implements ChessRule {
 
     @Override
     public boolean checkRule(Point currentP, Point nextP, ChessBoard cBoard) {
+        int xx = Math.abs(nextP.getX() - currentP.getX());
+        int yy = Math.abs(nextP.getY() - currentP.getY());
+        if (xx > 1 || yy > 1) return false;
         // x 3~5 y 7~9
         if (ChessColor.RED.equals(color)) {
             if (nextP.getX() < 3 || nextP.getX() > 5) return false;

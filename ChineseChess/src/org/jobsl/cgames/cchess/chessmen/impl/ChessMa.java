@@ -26,17 +26,13 @@ public class ChessMa extends Chessman implements ChessRule {
         boolean res = false;
         int xx = nextP.getX() - currentP.getX();
         int yy = nextP.getY() - currentP.getY();
-        if (Math.abs(xx) == 1) {
-            if (Math.abs(yy) == 2) {
-                Point blockP = new Point(currentP.getX() + xx, currentP.getY() + (yy / 2));
-                if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
-            }
+        if (Math.abs(xx) == 1 && Math.abs(yy) == 2) {
+            Point blockP = new Point(currentP.getX(), currentP.getY() + (yy / 2));
+            if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
         }
-        if (Math.abs(yy) == 1) {
-            if (Math.abs(xx) == 2) {
-                Point blockP = new Point(currentP.getX() + (xx / 2), currentP.getY() + yy);
-                if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
-            }
+        if (Math.abs(yy) == 1 && Math.abs(xx) == 2) {
+            Point blockP = new Point(currentP.getX() + (xx / 2), currentP.getY());
+            if (cBoard.checkCellEmpty(blockP, ChessColor.RED) && cBoard.checkCellEmpty(blockP, ChessColor.BLACK)) res = true;
         }
         return res ? super.checkRule(currentP, nextP, cBoard) : res;
     }

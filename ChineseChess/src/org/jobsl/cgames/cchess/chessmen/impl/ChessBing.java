@@ -27,9 +27,14 @@ public class ChessBing extends Chessman implements ChessRule {
         int xx = Math.abs(nextP.getX() - lastP.getX());
         int yy = nextP.getY() - lastP.getY();
         int absyy = Math.abs(yy);
-        if (ChessColor.RED.equals(color) && yy > 0) return res;
-        if (ChessColor.BLACK.equals(color) && yy < 0) return res;
-        if ((xx == 0 && absyy == 1) || (xx == 1 && absyy == 0)) res = true;
+        if (ChessColor.RED.equals(color)) {
+            if (yy > 0) return res;
+            if ((xx == 0 && absyy == 1) || (xx == 1 && absyy == 0 && lastP.getY() <= 4)) res = true;
+        }
+        if (ChessColor.BLACK.equals(color)) {
+            if (yy < 0) return res;
+            if ((xx == 0 && absyy == 1) || (xx == 1 && absyy == 0 && lastP.getY() >= 5)) res = true;
+        }
         return res ? super.checkRule(lastP, nextP, cBoard) : res;
     }
 }
