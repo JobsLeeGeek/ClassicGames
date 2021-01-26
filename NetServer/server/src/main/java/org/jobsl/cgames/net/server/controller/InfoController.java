@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/info")
+@RequestMapping(value = "/info", method = RequestMethod.POST)
 public class InfoController {
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     public String get(HttpServletRequest request, HttpServletResponse response) {

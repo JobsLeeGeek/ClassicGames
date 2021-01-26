@@ -11,10 +11,7 @@ public class Myhandler extends Handler {
     }
 
     @Override
-    public Message rec(String msg) {
-        System.out.println("client_rec=" + msg);
-        Message message = new Message();
-        message.setMsg(msg);
-        return message;
+    public void rec(Message msg) {
+        System.out.println("client_rec=" + msg.getMsg());
     }
 }

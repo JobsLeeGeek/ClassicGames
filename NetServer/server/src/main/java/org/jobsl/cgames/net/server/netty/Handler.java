@@ -1,7 +1,5 @@
 package org.jobsl.cgames.net.server.netty;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -10,8 +8,6 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.jobsl.cgames.net.common.msg.Message;
-
-import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class Handler extends ChannelInboundHandlerAdapter {
@@ -34,9 +30,8 @@ public class Handler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf byteBuf = (ByteBuf) msg;
-        String message = byteBuf.toString(StandardCharsets.UTF_8);
-        log.info("[server] rec-msg from [{}]:{}", ctx.channel().remoteAddress().toString(), message);
+        Message message = (Message) msg;
+        log.info("[server] rec-msg from [{}]:{}", ctx.channel().remoteAddress().toString(), message.getMsg());
         for (Channel ch : channels) {
             if (!ch.equals(ctx.channel())) ch.writeAndFlush(msg);
         }

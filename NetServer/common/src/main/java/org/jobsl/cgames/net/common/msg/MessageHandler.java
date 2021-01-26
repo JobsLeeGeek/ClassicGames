@@ -5,5 +5,5 @@ import io.netty.channel.Channel;
 public interface MessageHandler {
     void send(Channel channel, Message msg);
 
-    Message rec(String msg);
+    void rec(Message msg);
 }
