@@ -37,9 +37,10 @@ public class Controller {
                 cell.reDraw();
                 cell.setOnAction(event -> {
                     // red first and black second ... one by one
-//                    if (cell.getChessman() != null && !chessColorShould.equals(cell.getChessman().getColor())) return;
+                    boolean colorShouldChoose = (cell.getChessman() != null && chessColorShould.equals(cell.getChessman().getColor()));
                     // choose new one
                     if (chooseCell == null) {
+                        if (!colorShouldChoose) return;
                         cell.setChoose(true);
                         cell.reDraw();
                         chooseCell = cell;
@@ -53,6 +54,7 @@ public class Controller {
                     if (lastC != null) {
                         if (nextC != null) {
                             if (lastC.getColor().equals(nextC.getColor())) {
+                                if (!colorShouldChoose) return;
                                 // the same color choose new one
                                 cell.setChoose(true);
                                 cell.reDraw();
@@ -79,12 +81,21 @@ public class Controller {
     private void move(ChessBoardCell cell) {
         if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
             cell.setChessman(chooseCell.getChessman());
-            cell.setChoose(true);
+            // release choose
+            cell.setChoose(false);
             cell.reDraw();
+            // release choose
             chooseCell.setChoose(false);
             chooseCell.setChessman(null);
             chooseCell.reDraw();
-            chooseCell = cell;
+            // choose null next re-choose
+            chooseCell = null;
+            // change color should
+            setOpposedChessColorShould();
         }
+    }
+
+    private void setOpposedChessColorShould() {
+        this.chessColorShould = this.chessColorShould.getOpposed(this.chessColorShould);
     }
 }
