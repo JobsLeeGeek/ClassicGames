@@ -4,13 +4,13 @@ package org.jobsl.cgames.cchess.base;
  * @author JobsLee
  */
 public class Constants {
-    public static final String RESOURCE_PATH = "file:D:\\Develop\\Projects\\IDEA\\ClassicGames\\ChineseChess";
-    public static final String RESOURCE_BOARD_PATH = RESOURCE_PATH + "\\resource\\";
-    public static final String RESOURCE_CHESS_PATH = RESOURCE_PATH + "\\resource\\chess\\";
+    public static final String RESOURCE_PATH = Constants.class.getResource("/").toString();
+    public static final String RESOURCE_BOARD_PATH = RESOURCE_PATH + "image/";
+    public static final String RESOURCE_CHESS_PATH = RESOURCE_PATH + "image/chess/";
 
     public static final int BOARD_BACKGROUND_WIDTH = 521;
     public static final int BOARD_BACKGROUND_HEIGHT = 577;
-    public static final String BOARD_BACKGROUND_IMAGE = RESOURCE_BOARD_PATH + "\\BOARD.JPG";
+    public static final String BOARD_BACKGROUND_IMAGE = RESOURCE_BOARD_PATH + "BOARD.JPG";
 
     public static final int CHESSMAN_WIDTH = 57;
     public static final int CHESSMAN_HEIGHT = 57;
