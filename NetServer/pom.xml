@@ -9,17 +9,18 @@
         <version>2.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.jobsl.cgames.net</groupId>
-    <artifactId>NetServer</artifactId>
+    <groupId>org.jobsl.cgames</groupId>
+    <artifactId>netserver</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <name>NetServer</name>
+
     <modules>
         <module>server</module>
         <module>client</module>
         <module>common</module>
     </modules>
-    <packaging>pom</packaging>
-
-    <name>NetServer Maven Webapp</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
