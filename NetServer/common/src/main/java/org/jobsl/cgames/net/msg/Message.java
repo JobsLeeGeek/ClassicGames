@@ -13,7 +13,7 @@ public class Message implements Serializable {
      * 111111 失败
      * 010101 异常
      */
-    private String code;
+    private MessageCode code;
 
     private Long time;
 
@@ -30,11 +30,11 @@ public class Message implements Serializable {
         this.msgId = msgId;
     }
 
-    public String getCode() {
+    public MessageCode getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(MessageCode code) {
         this.code = code;
     }
 
