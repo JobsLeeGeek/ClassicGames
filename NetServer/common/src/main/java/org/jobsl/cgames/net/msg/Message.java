@@ -8,9 +8,12 @@ public class Message implements Serializable {
 
     private String msgId = UUID.randomUUID().toString();
 
-    private String from;
-
-    private String to;
+    /**
+     * 000000 成功
+     * 111111 失败
+     * 010101 异常
+     */
+    private String code;
 
     private Long time;
 
@@ -27,20 +30,12 @@ public class Message implements Serializable {
         this.msgId = msgId;
     }
 
-    public String getFrom() {
-        return from;
+    public String getCode() {
+        return code;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Long getTime() {
@@ -71,8 +66,7 @@ public class Message implements Serializable {
     public String toString() {
         return "Message{" +
                 "msgId='" + msgId + '\'' +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
+                ", code='" + code + '\'' +
                 ", time=" + time +
                 ", sign='" + sign + '\'' +
                 ", msg='" + msg + '\'' +
