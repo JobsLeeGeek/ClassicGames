@@ -23,10 +23,12 @@ public class Controller {
     private ChessBoardCell chooseCell;
     private ChessColor chessColorShould = ChessColor.RED;
 
+    private ChessColor myChessColor = ChessColor.RED;
+
     public void init() {
         // init chessBoard and chessmen data
         chessBoard = new ChessBoard();
-        chessBoard.init();
+        chessBoard.init(myChessColor);
         // init background display
         mainBoard.setImage(new Image(Constants.BOARD_BACKGROUND_IMAGE));
         // init chessmen display

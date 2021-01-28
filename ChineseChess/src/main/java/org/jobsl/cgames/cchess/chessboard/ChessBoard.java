@@ -19,11 +19,21 @@ public class ChessBoard {
     // column-ref
     private List<List<ChessBoardCell>> columnBoardCells = new ArrayList<>();
 
-    public void init() {
+    public void init(ChessColor chessColor) {
         // init empty cell
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 9; j++) {
-                boardCells[j][i] = new ChessBoardCell(new Point(j, i), 5 + j * Constants.CHESSMAN_WIDTH, 4 + i * Constants.CHESSMAN_HEIGHT);
+                switch (chessColor) {
+                    case RED:
+                        // red
+                        boardCells[j][i] = new ChessBoardCell(new Point(j, i), 5 + j * Constants.CHESSMAN_WIDTH, 4 + i * Constants.CHESSMAN_HEIGHT);
+                        break;
+                    case BLACK:
+                        // black
+                        boardCells[j][i] = new ChessBoardCell(new Point(j, i), 5 + (8 - j) * Constants.CHESSMAN_WIDTH, 4 + (9 - i) * Constants.CHESSMAN_HEIGHT);
+                        break;
+                    default: break;
+                }
             }
         }
         // init row ref
