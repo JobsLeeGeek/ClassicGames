@@ -1,11 +1,13 @@
 package org.jobsl.cgames.cchess;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 
@@ -26,6 +28,12 @@ public class GameChineseChess extends Application {
         controller.init();
         primaryStage.setTitle("中国象棋");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                controller.end();
+            }
+        });
         primaryStage.setResizable(false);
         primaryStage.show();
     }

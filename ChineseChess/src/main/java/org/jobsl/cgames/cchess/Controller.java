@@ -1,6 +1,8 @@
 package org.jobsl.cgames.cchess;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +17,8 @@ import org.jobsl.cgames.cchess.net.ChessMessage;
 import org.jobsl.cgames.cchess.net.ChessNetBattle;
 import org.jobsl.cgames.net.msg.MessageCode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,16 +29,59 @@ public class Controller {
     private AnchorPane mainPane;
     @FXML
     private ImageView mainBoard;
+    @FXML
+    private RadioButton singleRadio;
+    @FXML
+    private RadioButton onlineRadio;
+    @FXML
+    private RadioButton redRadio;
+    @FXML
+    private RadioButton blackRadio;
 
-    private ChessBoard chessBoard;
-    private ChessBoardCell chooseCell;
+    private ChessBoard chessBoard = null;
+    private ChessBoardCell chooseCell = null;
+    private List<Node> nodeList = new ArrayList<>();
     private ChessColor chessColorShould = ChessColor.RED;
 
     private ChessColor myChessColor = ChessColor.RED;
     private boolean onlineSwitch = false;
     ChessNetBattle netBattle = null;
 
+    @FXML
+    public void singleMode() {
+        if (netBattle != null) netBattle.disconnect();
+        onlineRadio.setSelected(false);
+        onlineSwitch = false;
+    }
+
+    @FXML
+    public void onlineMode() {
+        singleRadio.setSelected(false);
+        onlineSwitch = true;
+    }
+
+    @FXML
+    public void redFlag() {
+        blackRadio.setSelected(false);
+        myChessColor = ChessColor.RED;
+    }
+
+    @FXML
+    public void blackFlag() {
+        redRadio.setSelected(false);
+        myChessColor = ChessColor.BLACK;
+    }
+
+    @FXML
+    public void initGame() {
+        if (netBattle != null) netBattle.disconnect();
+        init();
+    }
+
     public void init() {
+        // clear pane chess
+        mainPane.getChildren().removeAll(nodeList);
+        nodeList.clear();
         // online mode
         if (onlineSwitch) {
             // msg handler init
@@ -90,9 +137,14 @@ public class Controller {
                         move(cell);
                     }
                 });
-                mainPane.getChildren().add(cell);
+                nodeList.add(cell);
             }
         }
+        mainPane.getChildren().addAll(nodeList);
+    }
+
+    public void end() {
+        if (netBattle != null) netBattle.disconnect();
     }
 
     public void move(Point fromP, Point toP) {

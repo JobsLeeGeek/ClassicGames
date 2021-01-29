@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="mainPane" focusTraversable="true" prefHeight="579.0" prefWidth="523.0"
-            style="-fx-background-color: #FAF8EF;" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobsl.cgames.cchess.Controller">
+
+<AnchorPane fx:id="mainPane" focusTraversable="true" prefHeight="579.0" prefWidth="673.0" style="-fx-background-color: #FAF8EF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobsl.cgames.cchess.Controller">
     <children>
-        <ImageView fx:id="mainBoard" fitHeight="577.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true"
-                   AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0"
-                   AnchorPane.topAnchor="1.0"/>
+        <ImageView fx:id="mainBoard" fitHeight="577.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+      <RadioButton fx:id="singleRadio" layoutX="526.0" layoutY="48.0" mnemonicParsing="false" onAction="#singleMode" selected="true" text="单机" />
+      <RadioButton fx:id="onlineRadio" layoutX="600.0" layoutY="48.0" mnemonicParsing="false" onAction="#onlineMode" text="在线" />
+      <RadioButton fx:id="redRadio" layoutX="526.0" layoutY="122.0" mnemonicParsing="false" onAction="#redFlag" selected="true" text="红" />
+      <RadioButton fx:id="blackRadio" layoutX="600.0" layoutY="122.0" mnemonicParsing="false" onAction="#blackFlag" text="黑" />
+      <Label layoutX="528.0" layoutY="14.0" text="游戏模式" />
+      <Label layoutX="528.0" layoutY="89.0" text="红方黑方" />
+      <Button fx:id="startBtn" layoutX="526.0" layoutY="166.0" mnemonicParsing="false" onAction="#initGame" prefHeight="36.0" prefWidth="141.0" text="开始游戏">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
