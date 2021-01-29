@@ -39,6 +39,7 @@ public class Controller {
         if (onlineSwitch) {
             // msg handler init
             netBattle = new ChessNetBattle(this, "127.0.0.1", 9191);
+            netBattle.connect();
         }
         // init chessBoard and chessmen data
         chessBoard = new ChessBoard();
@@ -110,8 +111,7 @@ public class Controller {
         if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
             // online mode send msg
             if (onlineSwitch) {
-                ChessMessage chessMsg = new ChessMessage(Commands.OFFLINE, chooseCell.getPoint(), cell.getPoint());
-                netBattle.sendMessage(MessageCode.SUCCESS, chessMsg);
+                netBattle.sendMessage(MessageCode.SUCCESS, new ChessMessage(Commands.MOVE, chooseCell.getPoint(), cell.getPoint()));
             }
             cell.setChessman(chooseCell.getChessman());
             // release choose
