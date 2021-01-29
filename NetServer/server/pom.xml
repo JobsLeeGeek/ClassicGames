@@ -11,7 +11,7 @@
     <groupId>org.jobsl.cgames.net</groupId>
     <artifactId>server</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>server</name>
 
