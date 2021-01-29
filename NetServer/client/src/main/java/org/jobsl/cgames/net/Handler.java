@@ -5,6 +5,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.jobsl.cgames.net.msg.Message;
 import org.jobsl.cgames.net.msg.MessageHandler;
+import org.jobsl.cgames.net.utils.Base64Utils;
+import org.jobsl.cgames.net.utils.MD5Utils;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class Handler extends ChannelInboundHandlerAdapter implements MessageHandler {
     @Override
@@ -30,4 +35,14 @@ public abstract class Handler extends ChannelInboundHandlerAdapter implements Me
 
     @Override
     public abstract void rec(Message msg);
+
+    @Override
+    public String sign(Message msg) {
+        try {
+            return MD5Utils.getEncryptedPwd(Base64Utils.encode(msg.toString().getBytes()), msg.getMsgId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

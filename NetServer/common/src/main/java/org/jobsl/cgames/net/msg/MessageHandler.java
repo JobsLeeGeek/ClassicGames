@@ -6,4 +6,6 @@ public interface MessageHandler {
     void send(Channel channel, Message msg);
 
     void rec(Message msg);
+
+    String sign(Message msg);
 }

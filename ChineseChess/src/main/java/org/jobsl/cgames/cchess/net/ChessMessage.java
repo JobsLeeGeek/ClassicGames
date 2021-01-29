@@ -23,6 +23,12 @@ public class ChessMessage implements Serializable {
 
     private String sign;
 
+    public ChessMessage(Commands command, Point fromPoint, Point toPoint) {
+        this.command = command;
+        this.fromPoint = fromPoint;
+        this.toPoint = toPoint;
+    }
+
     public Commands getCommand() {
         return command;
     }

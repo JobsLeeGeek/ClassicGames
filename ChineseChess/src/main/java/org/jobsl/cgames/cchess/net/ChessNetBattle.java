@@ -5,10 +5,6 @@ import org.jobsl.cgames.net.Client;
 import org.jobsl.cgames.net.Handler;
 import org.jobsl.cgames.net.msg.Message;
 import org.jobsl.cgames.net.msg.MessageCode;
-import org.jobsl.cgames.net.msg.MessageSign;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 public class ChessNetBattle {
     private String host;
@@ -16,6 +12,11 @@ public class ChessNetBattle {
 
     private Handler handler;
     private Client client;
+
+    public ChessNetBattle(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
 
     public void connect() {
         this.handler = new ChessHandler();
@@ -26,19 +27,14 @@ public class ChessNetBattle {
     public void sendMessage(MessageCode code, ChessMessage chessMsg) {
         Message message = new Message();
         message.setCode(code);
-        message.setTime(System.currentTimeMillis());
+        chessMsg.setIp(-1L);
+        chessMsg.setTime(System.currentTimeMillis());
+        chessMsg.setSign("");
         message.setMsg(JSONObject.toJSONString(chessMsg));
-        try {
-            message.setSign(MessageSign.sign(message));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
         this.handler.send(this.client.getChannel(), message);
     }
 
     public void disconnect() {
-
+        this.client.getChannel().close();
     }
 }

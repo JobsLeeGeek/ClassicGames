@@ -13,16 +13,20 @@ import org.jobsl.cgames.net.msg.MessageHandler;
 public class ChessHandler extends Handler implements MessageHandler {
     @Override
     public void send(Channel channel, Message msg) {
+        msg.setTime(System.currentTimeMillis());
+        msg.setSign(super.sign(msg));
         channel.writeAndFlush(msg);
     }
 
     @Override
     public void rec(Message msg) {
         String msgJson = msg.getMsg();
-        if (StringUtils.isNotBlank(msgJson)) {
+        // check sign
+        if (StringUtils.isNotBlank(msgJson) && msg.getSign().equals(super.sign(msg))) {
+            // uncode chessmsg
             ChessMessage chessMsg = JSONObject.parseObject(msgJson, ChessMessage.class);
             if (chessMsg != null) {
-                // todo  check msg sign and recId, then accroding to the COMMAND to do moving operation or any other op...
+                // todo next
             }
         }
     }
