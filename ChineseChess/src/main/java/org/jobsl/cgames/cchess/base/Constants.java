@@ -4,7 +4,8 @@ package org.jobsl.cgames.cchess.base;
  * @author JobsLee
  */
 public class Constants {
-    public static final String RESOURCE_PATH = Constants.class.getResource("/").toString();
+//    public static final String RESOURCE_PATH = Constants.class.getResource("/").toString();// local
+    public static final String RESOURCE_PATH = "";// jar
     public static final String RESOURCE_BOARD_PATH = RESOURCE_PATH + "image/";
     public static final String RESOURCE_CHESS_PATH = RESOURCE_PATH + "image/chess/";
 
