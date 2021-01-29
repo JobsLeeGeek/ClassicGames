@@ -29,7 +29,7 @@ public class ChessHandler extends Handler implements MessageHandler {
     public void rec(Message msg) {
         String msgJson = msg.getMsg();
         // check sign
-        if (StringUtils.isNotBlank(msgJson) && super.sign(msg).equals(msg.getSign())) {
+        if (StringUtils.isNotBlank(msgJson) && StringUtils.isNotBlank(msg.getSign()) && msg.getSign().equals(super.sign(msg))) {
             // uncode chessmsg
             ChessMessage chessMsg = JSONObject.parseObject(msgJson, ChessMessage.class);
             if (chessMsg != null) {

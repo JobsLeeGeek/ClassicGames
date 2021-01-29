@@ -39,6 +39,7 @@ public abstract class Handler extends ChannelInboundHandlerAdapter implements Me
     @Override
     public String sign(Message msg) {
         try {
+            msg.setSign(null);
             return MD5Utils.getEncryptedPwd(Base64Utils.encode(msg.toString().getBytes()), msg.getMsgId());
         } catch (Exception e) {
             e.printStackTrace();
