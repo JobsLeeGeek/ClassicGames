@@ -11,8 +11,13 @@ public class ClientTest {
         new Thread(() -> { client.run(); }).start();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
+            String msg = scanner.nextLine();
+            if ("EXIT".equals(msg)) {
+                client.getChannel().close();
+                break;
+            }
             Message message = new Message();
-            message.setMsg(scanner.nextLine());
+            message.setMsg(msg);
             handler.send(client.getChannel(), message);
         }
     }
