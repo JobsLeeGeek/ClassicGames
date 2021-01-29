@@ -4,11 +4,18 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.jobsl.cgames.cchess.base.Commands;
 import org.jobsl.cgames.cchess.base.Constants;
+import org.jobsl.cgames.cchess.base.Point;
 import org.jobsl.cgames.cchess.chessboard.ChessBoard;
 import org.jobsl.cgames.cchess.chessboard.ChessBoardCell;
 import org.jobsl.cgames.cchess.chessmen.ChessColor;
 import org.jobsl.cgames.cchess.chessmen.Chessman;
+import org.jobsl.cgames.cchess.net.ChessMessage;
+import org.jobsl.cgames.cchess.net.ChessNetBattle;
+import org.jobsl.cgames.net.msg.MessageCode;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author JobsLee
@@ -24,8 +31,15 @@ public class Controller {
     private ChessColor chessColorShould = ChessColor.RED;
 
     private ChessColor myChessColor = ChessColor.RED;
+    private boolean onlineSwitch = false;
+    ChessNetBattle netBattle = null;
 
     public void init() {
+        // online mode
+        if (onlineSwitch) {
+            // msg handler init
+            netBattle = new ChessNetBattle(this, "127.0.0.1", 9191);
+        }
         // init chessBoard and chessmen data
         chessBoard = new ChessBoard();
         chessBoard.init(myChessColor);
@@ -80,8 +94,25 @@ public class Controller {
         }
     }
 
+    public void move(Point fromP, Point toP) {
+        ChessBoardCell fromCell = chessBoard.getBoardCells()[fromP.getX()][fromP.getY()];
+        ChessBoardCell toCell = chessBoard.getBoardCells()[toP.getX()][toP.getY()];
+        fromCell.fire();
+        try {
+            TimeUnit.MILLISECONDS.sleep(600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        toCell.fire();
+    }
+
     private void move(ChessBoardCell cell) {
         if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
+            // online mode send msg
+            if (onlineSwitch) {
+                ChessMessage chessMsg = new ChessMessage(Commands.OFFLINE, chooseCell.getPoint(), cell.getPoint());
+                netBattle.sendMessage(MessageCode.SUCCESS, chessMsg);
+            }
             cell.setChessman(chooseCell.getChessman());
             // release choose
             cell.setChoose(false);
@@ -98,6 +129,6 @@ public class Controller {
     }
 
     private void setOpposedChessColorShould() {
-        this.chessColorShould = this.chessColorShould.getOpposed(this.chessColorShould);
+        chessColorShould = chessColorShould.getOpposed(chessColorShould);
     }
 }
