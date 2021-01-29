@@ -34,7 +34,12 @@ public class ChessHandler extends Handler implements MessageHandler {
             ChessMessage chessMsg = JSONObject.parseObject(msgJson, ChessMessage.class);
             if (chessMsg != null) {
                 // move
-                controller.move(chessMsg.getFromPoint(), chessMsg.getToPoint());
+                switch (chessMsg.getCommand()) {
+                    case MOVE:
+                        controller.move(chessMsg.getFromPoint(), chessMsg.getToPoint());
+                        break;
+                    default: break;
+                }
             }
         }
     }
