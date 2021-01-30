@@ -120,9 +120,6 @@ public class Controller {
                 cell.setOnAction(event -> {
                     // red first and black second ... one by one
                     boolean colorShouldChoose = (cell.getChessman() != null && chessColorShould.equals(cell.getChessman().getColor()));
-                    if (onlineSwitch) {
-                        colorShouldChoose = (cell.getChessman() != null && myChessColor.equals(cell.getChessman().getColor()));
-                    }
                     // choose new one
                     if (chooseCell == null) {
                         if (!colorShouldChoose) return;
