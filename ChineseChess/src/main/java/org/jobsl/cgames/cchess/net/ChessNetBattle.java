@@ -7,6 +7,8 @@ import org.jobsl.cgames.net.Handler;
 import org.jobsl.cgames.net.msg.Message;
 import org.jobsl.cgames.net.msg.MessageCode;
 
+import java.util.concurrent.TimeUnit;
+
 public class ChessNetBattle {
     private Controller controller;
 
@@ -31,6 +33,11 @@ public class ChessNetBattle {
         this.handler = new ChessHandler(controller);
         this.client = new Client(this.host, this.port, handler);
         new Thread(() -> { client.run(); }).start();
+        try {
+            TimeUnit.MILLISECONDS.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (this.client.getChannel() != null && this.client.getChannel().isOpen()) res = true;
         return res;
     }
