@@ -92,9 +92,6 @@ public class Controller {
     }
 
     public void init() {
-        // clear pane chess
-        mainPane.getChildren().removeAll(chessNodeList);
-        chessNodeList.clear();
         // online mode
         if (onlineSwitch) {
             // msg handler init
@@ -106,6 +103,9 @@ public class Controller {
                 return;
             }
         }
+        // clear pane chess
+        mainPane.getChildren().removeAll(chessNodeList);
+        chessNodeList.clear();
         // init chessBoard and chessmen data
         chessBoard = new ChessBoard();
         chessBoard.init(myChessColor);
