@@ -2,12 +2,12 @@ package org.jobsl.cgames.cchess;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.image.Image;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.jobsl.cgames.cchess.base.Commands;
-import org.jobsl.cgames.cchess.base.Constants;
 import org.jobsl.cgames.cchess.base.Point;
 import org.jobsl.cgames.cchess.chessboard.ChessBoard;
 import org.jobsl.cgames.cchess.chessboard.ChessBoardCell;
@@ -37,10 +37,14 @@ public class Controller {
     private RadioButton redRadio;
     @FXML
     private RadioButton blackRadio;
+    @FXML
+    private Button startBtn;
+    @FXML
+    private TextArea tipText;
 
     private ChessBoard chessBoard = null;
     private ChessBoardCell chooseCell = null;
-    private List<Node> nodeList = new ArrayList<>();
+    private List<Node> chessNodeList = new ArrayList<>();
     private ChessColor chessColorShould = ChessColor.RED;
 
     private ChessColor myChessColor = ChessColor.RED;
@@ -49,50 +53,64 @@ public class Controller {
 
     @FXML
     public void singleMode() {
+        tipText.appendText("已选择单机双人模式...\n");
         if (netBattle != null) netBattle.disconnect();
+        singleRadio.setSelected(true);
         onlineRadio.setSelected(false);
         onlineSwitch = false;
     }
 
     @FXML
     public void onlineMode() {
+        tipText.appendText("已选择在线模式...\n");
+        onlineRadio.setSelected(true);
         singleRadio.setSelected(false);
         onlineSwitch = true;
     }
 
     @FXML
     public void redFlag() {
+        tipText.appendText("已选择执红...\n");
+        redRadio.setSelected(true);
         blackRadio.setSelected(false);
         myChessColor = ChessColor.RED;
     }
 
     @FXML
     public void blackFlag() {
+        tipText.appendText("已选择执黑...\n");
+        blackRadio.setSelected(true);
         redRadio.setSelected(false);
         myChessColor = ChessColor.BLACK;
     }
 
     @FXML
     public void initGame() {
+        tipText.appendText("游戏开始...\n");
         if (netBattle != null) netBattle.disconnect();
         init();
     }
 
     public void init() {
         // clear pane chess
-        mainPane.getChildren().removeAll(nodeList);
-        nodeList.clear();
+        mainPane.getChildren().removeAll(chessNodeList);
+        chessNodeList.clear();
         // online mode
         if (onlineSwitch) {
             // msg handler init
             netBattle = new ChessNetBattle(this, "127.0.0.1", 9191);
-            netBattle.connect();
+            if (netBattle.connect()) {
+                tipText.appendText("游戏连接成功，正在请求匹配...\n");
+            } else {
+                tipText.appendText("游戏连接失败，请重试！\n");
+                return;
+            }
         }
         // init chessBoard and chessmen data
         chessBoard = new ChessBoard();
         chessBoard.init(myChessColor);
         // init background display
-        mainBoard.setImage(new Image(Constants.BOARD_BACKGROUND_IMAGE));
+//        mainBoard.setImage(new Image(Constants.BOARD_BACKGROUND_IMAGE));
         // init chessmen display
         ChessBoardCell[][] boardCells = chessBoard.getBoardCells();
         for (int i = 0; i < 10; i++) {
@@ -102,6 +120,9 @@ public class Controller {
                 cell.setOnAction(event -> {
                     // red first and black second ... one by one
                     boolean colorShouldChoose = (cell.getChessman() != null && chessColorShould.equals(cell.getChessman().getColor()));
+                    if (onlineSwitch) {
+                        colorShouldChoose = (cell.getChessman() != null && myChessColor.equals(cell.getChessman().getColor()));
+                    }
                     // choose new one
                     if (chooseCell == null) {
                         if (!colorShouldChoose) return;
@@ -137,10 +158,10 @@ public class Controller {
                         move(cell);
                     }
                 });
-                nodeList.add(cell);
+                chessNodeList.add(cell);
             }
         }
-        mainPane.getChildren().addAll(nodeList);
+        mainPane.getChildren().addAll(chessNodeList);
     }
 
     public void end() {

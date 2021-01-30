@@ -10,7 +10,10 @@
 
 <AnchorPane fx:id="mainPane" focusTraversable="true" prefHeight="579.0" prefWidth="673.0" style="-fx-background-color: #FAF8EF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobsl.cgames.cchess.Controller">
     <children>
-        <ImageView fx:id="mainBoard" fitHeight="577.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+        <ImageView fx:id="mainBoard" fitHeight="577.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+         <image>
+            <Image url="@/image/BOARD.JPG" />
+         </image></ImageView>
       <RadioButton fx:id="singleRadio" layoutX="526.0" layoutY="48.0" mnemonicParsing="false" onAction="#singleMode" selected="true" text="单机" />
       <RadioButton fx:id="onlineRadio" layoutX="600.0" layoutY="48.0" mnemonicParsing="false" onAction="#onlineMode" text="在线" />
       <RadioButton fx:id="redRadio" layoutX="526.0" layoutY="122.0" mnemonicParsing="false" onAction="#redFlag" selected="true" text="红" />
@@ -22,5 +25,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
+      <TextArea fx:id="tipText" disable="true" layoutX="525.0" layoutY="208.0" prefHeight="366.0" prefWidth="141.0" />
     </children>
 </AnchorPane>

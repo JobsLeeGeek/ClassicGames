@@ -25,7 +25,7 @@ public class GameChineseChess extends Application {
         Parent root = fxmlLoader.load();
         // init canvas
         Controller controller = fxmlLoader.getController();
-        controller.init();
+//        controller.init();
         primaryStage.setTitle("中国象棋");
         primaryStage.setScene(new Scene(root));
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

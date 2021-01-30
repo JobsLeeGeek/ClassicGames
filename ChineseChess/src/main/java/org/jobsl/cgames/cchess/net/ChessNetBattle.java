@@ -26,10 +26,13 @@ public class ChessNetBattle {
         this.port = port;
     }
 
-    public void connect() {
+    public boolean connect() {
+        boolean res = false;
         this.handler = new ChessHandler(controller);
         this.client = new Client(this.host, this.port, handler);
         new Thread(() -> { client.run(); }).start();
+        if (this.client.getChannel() != null && this.client.getChannel().isOpen()) res = true;
+        return res;
     }
 
     public void sendMessage(MessageCode code, ChessMessage chessMsg) {
@@ -43,6 +46,6 @@ public class ChessNetBattle {
     }
 
     public void disconnect() {
-        this.client.getChannel().close();
+        if (this.client.getChannel() != null) this.client.getChannel().close();
     }
 }
