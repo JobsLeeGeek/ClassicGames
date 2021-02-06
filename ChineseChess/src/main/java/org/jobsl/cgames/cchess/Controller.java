@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.jobsl.cgames.cchess.base.Commands;
+import org.jobsl.cgames.cchess.base.History;
 import org.jobsl.cgames.cchess.base.Point;
 import org.jobsl.cgames.cchess.chessboard.ChessBoard;
 import org.jobsl.cgames.cchess.chessboard.ChessBoardCell;
@@ -48,8 +49,11 @@ public class Controller {
     private ChessColor chessColorShould = ChessColor.RED;
 
     private ChessColor myChessColor = ChessColor.RED;
+    private ChessColor netChessColor = ChessColor.RED;
     private boolean onlineSwitch = false;
-    ChessNetBattle netBattle = null;
+    private ChessNetBattle netBattle = null;
+    private boolean isNetMove = false;
+    private List<History> historyList = new ArrayList<>();
 
     @FXML
     public void singleMode() {
@@ -119,7 +123,7 @@ public class Controller {
                 cell.reDraw();
                 cell.setOnAction(event -> {
                     // red first and black second ... one by one
-                    boolean colorShouldChoose = (cell.getChessman() != null && chessColorShould.equals(cell.getChessman().getColor()));
+                    boolean colorShouldChoose = (cell.getChessman() != null && (onlineSwitch && isNetMove) ? netChessColor.equals(cell.getChessman().getColor()) : chessColorShould.equals(cell.getChessman().getColor()));
                     // choose new one
                     if (chooseCell == null) {
                         if (!colorShouldChoose) return;
@@ -166,6 +170,7 @@ public class Controller {
     }
 
     public void move(Point fromP, Point toP) {
+        netMoveFlagChange();
         ChessBoardCell fromCell = chessBoard.getBoardCells()[fromP.getX()][fromP.getY()];
         ChessBoardCell toCell = chessBoard.getBoardCells()[toP.getX()][toP.getY()];
         fromCell.fire();
@@ -175,14 +180,20 @@ public class Controller {
             e.printStackTrace();
         }
         toCell.fire();
+        netMoveFlagChange();
     }
 
     private void move(ChessBoardCell cell) {
         if (chooseCell.getChessman().checkRule(chooseCell.getPoint(), cell.getPoint(), chessBoard)) {
+            Point fromP = chooseCell.getPoint();
+            Point toP = cell.getPoint();
+            // move history
+            historyList.add(new History(fromP, toP));
             // online mode send msg
             if (onlineSwitch) {
-                netBattle.sendMessage(MessageCode.SUCCESS, new ChessMessage(Commands.MOVE, chooseCell.getPoint(), cell.getPoint()));
+                netBattle.sendMessage(MessageCode.SUCCESS, new ChessMessage(Commands.MOVE, fromP, toP));
             }
+            // move operation
             cell.setChessman(chooseCell.getChessman());
             // release choose
             cell.setChoose(false);
@@ -198,7 +209,17 @@ public class Controller {
         }
     }
 
+    private void netMoveFlagChange() {
+        isNetMove = isNetMove ? false : true;
+    }
+
     private void setOpposedChessColorShould() {
-        chessColorShould = chessColorShould.getOpposed(chessColorShould);
+        if (onlineSwitch) {
+            // net color
+            netChessColor = netChessColor.getOpposed(netChessColor);
+        } else {
+            // my color
+            chessColorShould = chessColorShould.getOpposed(chessColorShould);
+        }
     }
 }
