@@ -123,7 +123,7 @@ public class Controller {
                 cell.reDraw();
                 cell.setOnAction(event -> {
                     // red first and black second ... one by one
-                    boolean colorShouldChoose = (cell.getChessman() != null && (onlineSwitch && isNetMove) ? netChessColor.equals(cell.getChessman().getColor()) : chessColorShould.equals(cell.getChessman().getColor()));
+                    boolean colorShouldChoose = (cell.getChessman() != null && ((onlineSwitch && isNetMove) ? netChessColor.equals(cell.getChessman().getColor()) : chessColorShould.equals(cell.getChessman().getColor())));
                     // choose new one
                     if (chooseCell == null) {
                         if (!colorShouldChoose) return;
